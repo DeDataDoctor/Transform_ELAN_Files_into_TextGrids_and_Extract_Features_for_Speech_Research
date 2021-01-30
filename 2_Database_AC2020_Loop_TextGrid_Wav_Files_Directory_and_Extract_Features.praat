@@ -1,8 +1,8 @@
 #this script will extract basic annotations in long format from every textgrid in a directory
-#WARNING: Make sure all the sound files and textgrids have matching names. Also no spaces are allowed in the naming format.
+#WARNING: Make sure all the sound files and textgrids have matching names AND are in the same directory. Also no spaces are allowed in the naming format. These are limitations of Praat.
 
 #This part creates a Sound strings list from your directory and and prepares this stringlist for a loop function
-Create Strings as file list... Sound C:\Users\JansenM\Documents\Database AC 2020 complete\Scripts for extracting data\TextGrids_and_Sound_files_praat\*.wav
+Create Strings as file list... Sound DirectoryPathToWavFiles\*.wav #add the path to the directory that contains the wav files you want to extract features from.
 selectObject: "Strings Sound"
 n_wavs = Get number of strings
 
@@ -10,11 +10,11 @@ n_wavs = Get number of strings
 for n from 1 to n_wavs
 	select Strings Sound
 	name_soundfile$ = Get string... 'n'
-	Read from file... C:\Users\JansenM\Documents\Database AC 2020 complete\Scripts for extracting data\TextGrids_and_Sound_files_praat\'name_soundfile$'
+	Read from file... DirectoryPathToWavFiles\'name_soundfile$' #add the path to the directory that contains the wav files you want to extract features from.
 endfor
 
 #this part creates a TextGrid strings list from your directory and and prepares this stringlist for a loop function
-Create Strings as file list... TextGrid C:\Users\JansenM\Documents\Database AC 2020 complete\Scripts for extracting data\TextGrids_and_Sound_files_praat\*.Textgrid
+Create Strings as file list... TextGrid DirectoryPathToTextGridFiles\*.Textgrid #add the path to the directory that contains the TextGrid files you want to extract features from.
 selectObject: "Strings TextGrid"
 n_grids = Get number of strings
 
@@ -29,7 +29,7 @@ writeInfoLine: "textgridfile", tab$, "interval_label_T1", tab$, "interval_label_
 for i from 1 to n_grids
 	select Strings TextGrid
 	name_file$ = Get string... 'i'
-	Read from file... C:\Users\JansenM\Documents\Database AC 2020 complete\Scripts for extracting data\TextGrids_and_Sound_files_praat\'name_file$'
+	Read from file... DirectoryPathToTextGridFiles\'name_file$' #add the path to the directory that contains the TextGrid files you want to extract features from.
 	name_object$ = selected$("TextGrid")
 	select TextGrid 'name_object$'
 	identifier$ = name_object$
@@ -71,16 +71,16 @@ for i from 1 to n_grids
 			standard_dev_intensity = Get standard deviation: interval_start, interval_end
 			min_intensity = Get quantile: interval_start, interval_end, 0.05
 			max_intensity = Get quantile: interval_start, interval_end, 0.95
-			appendInfo: tab$, fixed$ (mean_intensity, 3), tab$, fixed$ (standard_dev_intensity, 3), tab$, fixed$ (min_intensity, 3), tab$, fixed$ (max_intensity, 3)
+			appendInfo: tab$, fixed$ (mean_intensity, 3), tab$, fixed$ (standard_dev_intensity, 3), tab$, fixed$ (min_intensity, 3), tab$, fixed$ (max_intensity, 3) #the second argument, the integer 3 indicates the number of decimals.
 			appendInfo: newline$
 		endif
 	endfor
 	#this line would be useful if you wanted to do some kind of action with every textgrid in your directory and store it in a new directory.
-	#Save as text file: "C:\Users\JansenM\Documents\Papers work\MULAI database study\MULAI database statistics\3TextGrid_added_point_tier\AddedIntervalTier\Joker_first_Listener_second\'name_file$'"
+	#Save as text file: "YourPath\'name_file$'"
 endfor
 
 #saves the info window output in a txt, this txt is stored in the same directory as this script is stored.
-appendFile ("Extracted_practice_exploration_data_06072020.txt", info$ ())
+appendFile ("Filename.txt", info$ ())
 
 #clear the info window because otherwise old info might get appended with the new info
 clearinfo
