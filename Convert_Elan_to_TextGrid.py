@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jun 24 09:17:10 2020
-
-@author: JansenM
-"""
-
 #IMPORTANT this is a improved version of "Export ELAN to Textgrid.py". It is intended to automatically convert all eaf. files into usable textgrids in a list of directories. I tried to code this so that we can make adjustments in the ELAN files themselves and just run this code to get new data. Assumptions that should be met for this code to work:
 #All Elan Files that you want are in the directories or subdirectories that you provide.
 #All Elan Files are identically named to one .wav file
@@ -23,7 +16,7 @@ from pydub import AudioSegment
 #import wave
 #import contextlib
 
-DirectoryDocument = "C:\\Users\\JansenM\\Documents\\Database AC 2020 complete\\Scripts for extracting data\\StudentDirectoryList.txt" #this is a list of all the directories from students, numbers seem random but are assignment keys we will use this list to go through the folders we are interested in. We chose to not automatically extract these folders, but to use a short list with folder names since it was only a short list and gives more manual control/can be changed depending on the needs. Another reason to do it this way is because this way we are more aware of choices.
+DirectoryDocument = "PATH\DirectoryList.txt" #this is a list of all the directories, we will use this list to go through the folders we are interested in. We chose to not automatically extract these folders, but to use a short list with folder names since it was only a short list and gives more manual control/can be changed depending on the needs. Another reason to do it this way is because this way we are more aware of choices.
 
 #Here we define a set of lists that will be cleared each time we run the code, and which will be used in different steps along the document.
 DirectoryList = [] #This is a list we create for all directories we want to search.
